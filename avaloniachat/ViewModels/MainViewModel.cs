@@ -1,14 +1,16 @@
 ﻿using avaloniachat.Models;
 using JetBrains.Annotations;
 using ReactiveUI;
+using Supabase.Realtime;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reactive;
 using System.Runtime.CompilerServices;
+using Client = Supabase.Client;
 
 namespace avaloniachat.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public IEnumerable<Students> Students { get; set; }
         public IEnumerable<Messages> Messages { get; set; }
@@ -20,7 +22,6 @@ namespace avaloniachat.ViewModels
             set => this.RaiseAndSetIfChanged(ref newMessageContent, value);
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
         public MainViewModel(Database db)
         {
             Students = new List<Students>();
@@ -36,7 +37,6 @@ namespace avaloniachat.ViewModels
                 db.NewMessage(NewMessageContent);
             });
         }
-
         public async void SetStudents(Database db)
         {
             Students = await db.GetStudentsUpdated();

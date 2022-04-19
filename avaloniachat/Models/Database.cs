@@ -10,18 +10,11 @@ using Client = Supabase.Client;
 
 namespace avaloniachat.Models
 {
-    public class Database : INotifyPropertyChanged
+    public class Database
     {
-        public IEnumerable<Students> Students { get; set; }
-        public IEnumerable<Messages> Messages { get; set; }
-
-        private Client Client { get; }
+        public Client Client { get; }
         public Database()
         {
-
-            Students = new List<Students>();
-            Messages = new List<Messages>();
-
             string url = "https://ydzpeaypsqooryhbmvyn.supabase.co";
             string key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlkenBlYXlwc3Fvb3J5aGJtdnluIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDcyNzUyMzAsImV4cCI6MTk2Mjg1MTIzMH0.hNMuWuX3sJtJY_bM0tCvtT2zps9YPVj-vNeb0lUHC9g";
 
@@ -32,9 +25,6 @@ namespace avaloniachat.Models
             });
 
             Client = Client.Instance;
-
-            Client.From<Students>().On(Client.ChannelEventType.All, StudentsChanged);
-            Client.From<Messages>().On(Client.ChannelEventType.All, MessagesChanged);
         }
         public void RegisterUser(string Username)
         {
@@ -62,49 +52,15 @@ namespace avaloniachat.Models
             }
             return false;
         }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void StudentsChanged(object sender, SocketResponseEventArgs a)
-        {
-            LoadData();
-        }
-
-        private void MessagesChanged(object sender, SocketResponseEventArgs a)
-        {
-            LoadData();
-        }
-
-        // А вот так просходит загрузка данных из талицы
-        // на сервере Supabase в массив нашей программы
-        public async void LoadData()
-        {
-            var DataStudents = await Client.From<Students>().Get();
-            Students = DataStudents.Models;
-
-            var DataMessages = await Client.From<Messages>().Get();
-            Messages = DataMessages.Models;
-
-            OnPropertyChanged(nameof(Students));
-            OnPropertyChanged(nameof(Messages));
-        }
-
         public async Task<List<Students>> GetStudentsUpdated()
         {
             var DataStudents = await Client.From<Students>().Get();
             return DataStudents.Models;
         }
-
         public async Task<List<Messages>> GetMessagesUpdated()
         {
             var DataMessages = await Client.From<Messages>().Get();
             return DataMessages.Models;
-        }
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

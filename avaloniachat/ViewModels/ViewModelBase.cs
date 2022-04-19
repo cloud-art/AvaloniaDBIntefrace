@@ -6,7 +6,7 @@ using System.Text;
 
 namespace avaloniachat.ViewModels
 {
-    public class ViewModelBase : ReactiveObject, INotifyPropertyChanged
+    public class ViewModelBase : ReactiveObject
     {
 
     }

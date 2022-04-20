@@ -23,7 +23,6 @@ namespace avaloniachat
                 desktop.MainWindow = new MainWindow
                 {
                     DataContext = new MainWindowViewModel(db),
-                    //DataContext = database,
                 };
             }
 

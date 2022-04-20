@@ -11,16 +11,13 @@
 		<Grid ShowGridLines="True">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*"></RowDefinition>
-				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="100"></RowDefinition>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"></ColumnDefinition>
 				<ColumnDefinition Width="*"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
-			<TextBlock
-				Text="{Binding TestStudent}">
-				
-			</TextBlock>
+
 			<ItemsControl Items="{Binding Students}" Grid.Row="0" Grid.Column="0">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
@@ -41,11 +38,6 @@
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
-
-			<TextBlock
-				Grid.Row="1" Grid.Column="0"
-				Text="{Binding Students}">
-			</TextBlock>
 
 			<ItemsControl Items="{Binding Messages}" Grid.Row="0" Grid.Column="1">
 				<ItemsControl.ItemTemplate>

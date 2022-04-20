@@ -18,18 +18,30 @@ namespace avaloniachat.ViewModels
             set => this.RaiseAndSetIfChanged(ref username, value);
         }
 
+        public int age = 18;
+        public int Age
+        {
+            get => age;
+            set => this.RaiseAndSetIfChanged(ref age, value);
+        }
         public LoginViewModel(Database db)
         {
             Login = ReactiveCommand.Create(async () => {
                 if (await db.IsUserExist(Username)) { }
                 else
                 {
-                    db.RegisterUser(Username);
+                    db.RegisterUser(Username, Age);
                 }
                 
             });
+
+            OpenChat = ReactiveCommand.Create(async () => {
+                
+            });
         }
+        
         public ReactiveCommand<Unit, Task> Login { get; }
+        public ReactiveCommand<Unit, Task> OpenChat { get; }
     }
 }
 

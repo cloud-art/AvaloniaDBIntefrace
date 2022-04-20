@@ -3,17 +3,17 @@ using JetBrains.Annotations;
 using ReactiveUI;
 using Supabase.Realtime;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Reactive;
-using System.Runtime.CompilerServices;
-using Client = Supabase.Client;
 
 namespace avaloniachat.ViewModels
 {
     public class MainViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        public IEnumerable<Students> Students { get; set; }
-        public IEnumerable<Messages> Messages { get; set; }
+        public ObservableCollection<Students> Students { get; set; }
+        public ObservableCollection<Messages> Messages { get; set; }
 
         public string newMessageContent = "";
         public string NewMessageContent
@@ -24,8 +24,8 @@ namespace avaloniachat.ViewModels
 
         public MainViewModel(Database db)
         {
-            Students = new List<Students>();
-            Messages = new List<Messages>();
+            Students = new ObservableCollection<Students>();
+            Messages = new ObservableCollection<Messages>();
 
             GetStudents = ReactiveCommand.Create(() =>
             {
@@ -35,16 +35,44 @@ namespace avaloniachat.ViewModels
 
             NewMessage = ReactiveCommand.Create(() => {
                 db.NewMessage(NewMessageContent);
+
+                SetMessages(db);
             });
         }
         public async void SetStudents(Database db)
         {
-            Students = await db.GetStudentsUpdated();
+            ObservableCollection<Students> NewStudents = await db.GetStudentsUpdated();
+            foreach (Students Student in NewStudents)
+            {
+                bool Contains = false;
+                foreach (Students _Student in Students)
+                {
+                    if (_Student.Id == Student.Id) { Contains = true; break; }
+                }
+                if (!Contains) 
+                {
+                    Students.Add(Student);
+                }
+                    
+            }
+
         }
 
         public async void SetMessages(Database db)
         {
-            Messages = await db.GetMessagesUpdated();
+            ObservableCollection<Messages> NewMessages = await db.GetMessagesUpdated();
+            foreach (Messages Message in NewMessages)
+            {
+                bool Contains = false;
+                foreach (Messages _Message in Messages)
+                {
+                    if (_Message.Id == Message.Id) { Contains = true; break; }
+                }
+                if (!Contains) 
+                { 
+                    Messages.Add(Message); 
+                }
+            }
         }
 
         public ReactiveCommand<Unit, Unit> GetStudents { get; }

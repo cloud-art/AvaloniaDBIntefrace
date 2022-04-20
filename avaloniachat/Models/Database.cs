@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -26,11 +27,11 @@ namespace avaloniachat.Models
 
             Client = Client.Instance;
         }
-        public void RegisterUser(string Username)
+        public void RegisterUser(string Username, int Age)
         {
             if (Username != "")
             {
-                Client.From<Students>().Insert(new Students() { Name = Username, Age = 1 });
+                Client.From<Students>().Insert(new Students() { Name = Username, Age = Age });
             }
         }
 
@@ -52,15 +53,15 @@ namespace avaloniachat.Models
             }
             return false;
         }
-        public async Task<List<Students>> GetStudentsUpdated()
+        public async Task<ObservableCollection<Students>> GetStudentsUpdated()
         {
             var DataStudents = await Client.From<Students>().Get();
-            return DataStudents.Models;
+            return new ObservableCollection<Students>(DataStudents.Models);
         }
-        public async Task<List<Messages>> GetMessagesUpdated()
+        public async Task<ObservableCollection<Messages>> GetMessagesUpdated()
         {
             var DataMessages = await Client.From<Messages>().Get();
-            return DataMessages.Models;
+            return new ObservableCollection<Messages>(DataMessages.Models);
         }
     }
 }

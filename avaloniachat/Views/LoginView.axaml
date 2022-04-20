@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500"
              x:Class="avaloniachat.Views.LoginView">
 
 	<DockPanel>
@@ -10,11 +10,15 @@
 		<Grid ShowGridLines="True">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*"></RowDefinition>
-				<RowDefinition Height="*"></RowDefinition>
 			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
 
 			<TextBox
 				Grid.Row="1"
+				Grid.Column="0"
 				TextWrapping="Wrap"
 				Text="{Binding Username}"
 				BorderBrush="Transparent"
@@ -26,16 +30,25 @@
 				HorizontalAlignment="Center"
 				Margin="10"
 				Watermark="Type your name"/>
-
-			<TextBlock
+			
+			<TextBox
+				Grid.Row="1"
+				Grid.Column="1"
+				TextWrapping="Wrap"
+				Text="{Binding Age}"
+				BorderBrush="Transparent"
+				Background="Transparent"
+				VerticalContentAlignment="Center"
+				Height="20"
+				Width="40"
+				VerticalAlignment="Center"
+				HorizontalAlignment="Center"
 				Margin="10"
-				Grid.Row="0"
-				HorizontalAlignment="Center" VerticalAlignment="Center"
-				Text="{Binding Username}">
-			</TextBlock>
+				Watermark="Age"/>
 
 			<Button
 				Grid.Row="1"
+				Grid.Column="1"
 				HorizontalAlignment="Right"
 				VerticalAlignment="Center"
 				Margin="50"
@@ -44,6 +57,7 @@
 				Log in
 			</Button>
 			<Button
+				Grid.Column="1"
 				Grid.Row="1"
 				HorizontalAlignment="Right"
 				VerticalAlignment="Bottom"

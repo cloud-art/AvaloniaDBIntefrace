@@ -14,6 +14,7 @@ namespace avaloniachat.Models
     public class Database
     {
         public Client Client { get; }
+        public Students StudentThis { get; set; }
         public Database()
         {
             string url = "https://ydzpeaypsqooryhbmvyn.supabase.co";
@@ -26,6 +27,8 @@ namespace avaloniachat.Models
             });
 
             Client = Client.Instance;
+
+            StudentThis = new Students();
         }
         public void RegisterUser(string Username, int Age)
         {
@@ -39,7 +42,7 @@ namespace avaloniachat.Models
         {
             if (Message != "")
             {
-                Client.From<Messages>().Insert(new Messages() { UserId = 0, Text = Message } );
+                Client.From<Messages>().Insert(new Messages() { UserId = 0, Text = Message });
             }
         }
 
@@ -52,6 +55,17 @@ namespace avaloniachat.Models
                 if (student.Name == Username) return true;
             }
             return false;
+        }
+        public async Task<Students> FindStudentByName(string Username)
+        {
+            var query = await Client.From<Students>().Get();
+            List<Students> data = query.Models;
+            Students Student = new Students();
+            foreach (Students student in data)
+            {
+                if (student.Name == Username) Student = student;
+            }
+            return Student;
         }
         public async Task<ObservableCollection<Students>> GetStudentsUpdated()
         {

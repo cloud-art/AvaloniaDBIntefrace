@@ -30,7 +30,7 @@
 				HorizontalAlignment="Center"
 				Margin="10"
 				Watermark="Type your name"/>
-			
+
 			<TextBox
 				Grid.Row="1"
 				Grid.Column="1"

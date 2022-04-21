@@ -14,5 +14,5 @@
 		TransparencyLevelHint="AcrylicBlur"
 		ExtendClientAreaToDecorationsHint="True"
 		Content="{Binding Content}">
-	
+
 </Window>

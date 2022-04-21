@@ -26,6 +26,7 @@ namespace avaloniachat.ViewModels
         {
             Students = new ObservableCollection<Students>();
             Messages = new ObservableCollection<Messages>();
+            SetMessages(db);
 
             GetStudents = ReactiveCommand.Create(() =>
             {
@@ -49,11 +50,11 @@ namespace avaloniachat.ViewModels
                 {
                     if (_Student.Id == Student.Id) { Contains = true; break; }
                 }
-                if (!Contains) 
+                if (!Contains)
                 {
                     Students.Add(Student);
                 }
-                    
+
             }
 
         }
@@ -68,9 +69,9 @@ namespace avaloniachat.ViewModels
                 {
                     if (_Message.Id == Message.Id) { Contains = true; break; }
                 }
-                if (!Contains) 
-                { 
-                    Messages.Add(Message); 
+                if (!Contains)
+                {
+                    Messages.Add(Message);
                 }
             }
         }

@@ -27,27 +27,17 @@ namespace avaloniachat.ViewModels
         public LoginViewModel(Database db)
         {
             Login = ReactiveCommand.Create(async () => {
+                
                 if (await db.IsUserExist(Username)) { }
                 else
                 {
                     db.RegisterUser(Username, Age);
                 }
-                
-            });
+                db.StudentThis = await db.FindStudentByName(Username);
 
-            OpenChat = ReactiveCommand.Create(async () => {
-                
             });
         }
-        
+
         public ReactiveCommand<Unit, Task> Login { get; }
-        public ReactiveCommand<Unit, Task> OpenChat { get; }
     }
 }
-
-
-
-
-    
-
-

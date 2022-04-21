@@ -5,9 +5,9 @@
 			 x:Class="avaloniachat.Views.MainView"
 			 Width="700" Height="700"
 			 Background="Transparent">
-	
+
 	<DockPanel Margin="20">
-		
+
 		<Grid ShowGridLines="True">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*"></RowDefinition>
@@ -59,9 +59,9 @@
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
-			
-			
-			
+
+
+
 			<Button Grid.Row="1" Grid.Column="0"
 					VerticalAlignment="Bottom"
 					HorizontalAlignment="Center"
@@ -72,7 +72,7 @@
 			</Button>
 
 
-			
+
 			<TextBox TextWrapping="Wrap"
 					 Grid.Row="1"
                      Grid.Column="1"
@@ -97,16 +97,16 @@
 				Send
 			</Button>
 
-			<TextBlock 
+			<TextBlock
 				Grid.Row="0"
                 Grid.Column="1"
 				Text="{Binding Greetings}">
-				
+
 			</TextBlock>
-		
+
 		</Grid>
 
 	</DockPanel>
-	
+
 
 </UserControl>

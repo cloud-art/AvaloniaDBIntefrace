@@ -14,11 +14,17 @@ namespace avaloniachat.Models
     public class Database
     {
         public Client Client { get; }
+        public ObservableCollection<Students> Students { get; set; }
+        public ObservableCollection<Messages> Messages { get; set; }
         public Students StudentThis { get; set; }
         public Database()
         {
             string url = "https://ydzpeaypsqooryhbmvyn.supabase.co";
             string key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlkenBlYXlwc3Fvb3J5aGJtdnluIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDcyNzUyMzAsImV4cCI6MTk2Mjg1MTIzMH0.hNMuWuX3sJtJY_bM0tCvtT2zps9YPVj-vNeb0lUHC9g";
+
+            Students = new ObservableCollection<Students>();
+            Messages = new ObservableCollection<Messages>();
+            StudentThis = new Students();
 
             Client.InitializeAsync(url, key, new SupabaseOptions
             {
@@ -28,8 +34,14 @@ namespace avaloniachat.Models
 
             Client = Client.Instance;
 
-            StudentThis = new Students();
+            Client.From<Students>().On(Client.ChannelEventType.All, DataChanged);
         }
+        public void DataChanged(object sender, SocketResponseEventArgs a)
+        {
+            GetMessagesUpdated();
+            GetStudentsUpdated();
+        }
+
         public void RegisterUser(string Username, int Age)
         {
             if (Username != "")
@@ -37,7 +49,6 @@ namespace avaloniachat.Models
                 Client.From<Students>().Insert(new Students() { Name = Username, Age = Age });
             }
         }
-
         public void NewMessage(string Message)
         {
             if (Message != "")
@@ -45,7 +56,6 @@ namespace avaloniachat.Models
                 Client.From<Messages>().Insert(new Messages() { UserId = 0, Text = Message });
             }
         }
-
         public async Task<bool> IsUserExist(string Username)
         {
             var query = await Client.From<Students>().Get();
@@ -67,15 +77,17 @@ namespace avaloniachat.Models
             }
             return Student;
         }
-        public async Task<ObservableCollection<Students>> GetStudentsUpdated()
+        public async void GetStudentsUpdated()
         {
             var DataStudents = await Client.From<Students>().Get();
-            return new ObservableCollection<Students>(DataStudents.Models);
+            ObservableCollection < Students> StudentsNew = new ObservableCollection<Students>(DataStudents.Models);
+            Students = StudentsNew;
         }
-        public async Task<ObservableCollection<Messages>> GetMessagesUpdated()
+        public async void GetMessagesUpdated()
         {
             var DataMessages = await Client.From<Messages>().Get();
-            return new ObservableCollection<Messages>(DataMessages.Models);
+            ObservableCollection<Messages> MessagesNew = new ObservableCollection<Messages>(DataMessages.Models);
+            Messages = MessagesNew;
         }
     }
 }

@@ -26,12 +26,13 @@ namespace avaloniachat.ViewModels
         {
             Students = new ObservableCollection<Students>();
             Messages = new ObservableCollection<Messages>();
+            db.GetStudentsUpdated();
+            db.GetMessagesUpdated();
             SetMessages(db);
 
             GetStudents = ReactiveCommand.Create(() =>
             {
                 SetStudents(db);
-                SetMessages(db);
             });
 
             NewMessage = ReactiveCommand.Create(() => {
@@ -40,9 +41,11 @@ namespace avaloniachat.ViewModels
                 SetMessages(db);
             });
         }
+
         public async void SetStudents(Database db)
         {
-            ObservableCollection<Students> NewStudents = await db.GetStudentsUpdated();
+            db.GetStudentsUpdated();
+            ObservableCollection<Students> NewStudents = db.Students;
             foreach (Students Student in NewStudents)
             {
                 bool Contains = false;
@@ -54,14 +57,13 @@ namespace avaloniachat.ViewModels
                 {
                     Students.Add(Student);
                 }
-
             }
-
         }
 
         public async void SetMessages(Database db)
         {
-            ObservableCollection<Messages> NewMessages = await db.GetMessagesUpdated();
+            db.GetMessagesUpdated();
+            ObservableCollection<Messages> NewMessages = db.Messages;
             foreach (Messages Message in NewMessages)
             {
                 bool Contains = false;

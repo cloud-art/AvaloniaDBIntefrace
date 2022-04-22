@@ -38,8 +38,8 @@ namespace avaloniachat.Models
         }
         public void DataChanged(object sender, SocketResponseEventArgs a)
         {
-            GetMessagesUpdated();
-            GetStudentsUpdated();
+            SetMessages();
+            SetStudents();
         }
 
         public void RegisterUser(string Username, int Age)
@@ -77,13 +77,13 @@ namespace avaloniachat.Models
             }
             StudentThis = Student;
         }
-        public async void GetStudentsUpdated()
+        public async void SetStudents()
         {
             var DataStudents = await Client.From<Students>().Get();
             ObservableCollection < Students> StudentsNew = new ObservableCollection<Students>(DataStudents.Models);
             Students = StudentsNew;
         }
-        public async void GetMessagesUpdated()
+        public async void SetMessages()
         {
             var DataMessages = await Client.From<Messages>().Get();
             ObservableCollection<Messages> MessagesNew = new ObservableCollection<Messages>(DataMessages.Models);

@@ -26,8 +26,8 @@ namespace avaloniachat.ViewModels
         {
             Students = new ObservableCollection<Students>();
             Messages = new ObservableCollection<Messages>();
-            db.GetStudentsUpdated();
-            db.GetMessagesUpdated();
+            db.SetStudents();
+            db.SetMessages();
             SetMessages(db);
 
             GetStudents = ReactiveCommand.Create(() =>
@@ -44,7 +44,7 @@ namespace avaloniachat.ViewModels
 
         public async void SetStudents(Database db)
         {
-            db.GetStudentsUpdated();
+            db.SetStudents();
             ObservableCollection<Students> NewStudents = db.Students;
             foreach (Students Student in NewStudents)
             {
@@ -62,7 +62,7 @@ namespace avaloniachat.ViewModels
 
         public async void SetMessages(Database db)
         {
-            db.GetMessagesUpdated();
+            db.SetMessages();
             ObservableCollection<Messages> NewMessages = db.Messages;
             foreach (Messages Message in NewMessages)
             {

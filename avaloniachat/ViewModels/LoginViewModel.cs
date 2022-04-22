@@ -33,7 +33,7 @@ namespace avaloniachat.ViewModels
                 {
                     db.RegisterUser(Username, Age);
                 }
-                db.StudentThis = await db.FindStudentByName(Username);
+                db.SetDefaultStudent(Username);
 
             });
         }

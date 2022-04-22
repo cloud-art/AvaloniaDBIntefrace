@@ -53,7 +53,7 @@ namespace avaloniachat.Models
         {
             if (Message != "")
             {
-                Client.From<Messages>().Insert(new Messages() { UserId = 0, Text = Message });
+                Client.From<Messages>().Insert(new Messages() { UserId = StudentThis.Id, Text = Message });
             }
         }
         public async Task<bool> IsUserExist(string Username)
@@ -66,7 +66,7 @@ namespace avaloniachat.Models
             }
             return false;
         }
-        public async Task<Students> FindStudentByName(string Username)
+        public async void SetDefaultStudent(string Username)
         {
             var query = await Client.From<Students>().Get();
             List<Students> data = query.Models;
@@ -75,7 +75,7 @@ namespace avaloniachat.Models
             {
                 if (student.Name == Username) Student = student;
             }
-            return Student;
+            StudentThis = Student;
         }
         public async void GetStudentsUpdated()
         {

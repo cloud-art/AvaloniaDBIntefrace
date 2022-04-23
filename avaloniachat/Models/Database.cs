@@ -92,7 +92,6 @@ namespace avaloniachat.Models
                     Students.Add(Student);
                 }
             }
-
         }
         public async void SetMessages()
         {
@@ -111,7 +110,6 @@ namespace avaloniachat.Models
                     Messages.Add(Message);
                 }
             }
-
         }
     }
 }

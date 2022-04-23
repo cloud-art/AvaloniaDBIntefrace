@@ -7,9 +7,9 @@ using avaloniachat.ViewModels;
 
 namespace avaloniachat.Views
 {
-    public partial class MainView : UserControl
+    public partial class ChatView : UserControl
     {
-        public MainView()
+        public ChatView()
         {
             InitializeComponent();
         }

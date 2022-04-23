@@ -62,7 +62,7 @@
 				HorizontalAlignment="Right"
 				VerticalAlignment="Bottom"
 				Margin="10"
-				Command="{Binding $parent[Window].DataContext.OpenMainView}"
+				Command="{Binding $parent[Window].DataContext.OpenChatView}"
 				>
 				Open chat
 			</Button>

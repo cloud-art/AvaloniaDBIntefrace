@@ -26,6 +26,7 @@ namespace avaloniachat.ViewModels
         }
         public LoginViewModel(Database db)
         {
+            db.SetDefaultStudent("guest");
             Login = ReactiveCommand.Create(async () => {
                 
                 if (await db.IsUserExist(Username)) { }

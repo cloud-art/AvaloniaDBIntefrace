@@ -37,9 +37,9 @@ namespace avaloniachat.ViewModels
             Content = Login = new LoginViewModel(Database);
         }
 
-        public void OpenMainView()
+        public void OpenChatView()
         {
-            Content = new MainViewModel(Database);
+            Content = new ChatViewModel(Database);
         }
     }
 

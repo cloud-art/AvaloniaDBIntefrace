@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace avaloniachat.ViewModels
 {
-    public class MainViewModel : ViewModelBase, INotifyPropertyChanged
+    public class ChatViewModel : ViewModelBase, INotifyPropertyChanged
     {
         private Database db { get; set; } = new Database();
         public ObservableCollection<Students> Students { get; set; }
@@ -26,7 +26,7 @@ namespace avaloniachat.ViewModels
             set => this.RaiseAndSetIfChanged(ref newMessageContent, value);
         }
 
-        public MainViewModel(Database database)
+        public ChatViewModel(Database database)
         {
             Students = new ObservableCollection<Students>();
             Messages = new ObservableCollection<Messages>();

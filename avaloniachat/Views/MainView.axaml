@@ -73,6 +73,16 @@
 
 
 
+			<Button
+					Grid.Row="1" Grid.Column="1"
+					Margin="10"
+					HorizontalAlignment="Center"
+					VerticalAlignment="Top"
+					Command="{Binding GetMessages}">
+				Подгрузить сообщения (если не работает)
+			</Button>
+
+
 			<TextBox TextWrapping="Wrap"
 					 Grid.Row="1"
                      Grid.Column="1"

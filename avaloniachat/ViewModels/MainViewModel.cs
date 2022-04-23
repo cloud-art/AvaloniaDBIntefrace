@@ -54,6 +54,10 @@ namespace avaloniachat.ViewModels
             {
                 db.SetStudents();
             });
+            GetMessages = ReactiveCommand.Create(() =>
+            {
+                db.SetMessages();
+            });
             NewMessage = ReactiveCommand.CreateFromTask(SendMessage, canSendMessage);
             canSendMessage = this.WhenAnyValue(x => x.NewMessageContent).Select(x => !string.IsNullOrEmpty(x));
         }
@@ -63,6 +67,7 @@ namespace avaloniachat.ViewModels
         }
 
         public ReactiveCommand<Unit, Unit> GetStudents { get; }
+        public ReactiveCommand<Unit, Unit> GetMessages { get; }
         public ReactiveCommand<Unit, Unit> NewMessage { get; }
         private IObservable<bool> canSendMessage;
     }

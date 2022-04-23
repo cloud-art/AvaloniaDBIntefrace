@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reactive.Subjects;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -35,13 +36,13 @@ namespace avaloniachat.Models
             Client = Client.Instance;
 
             Client.From<Students>().On(Client.ChannelEventType.All, DataChanged);
+            Client.From<Messages>().On(Client.ChannelEventType.All, DataChanged);
         }
         public void DataChanged(object sender, SocketResponseEventArgs a)
         {
             SetMessages();
             SetStudents();
         }
-
         public void RegisterUser(string Username, int Age)
         {
             if (Username != "")
@@ -49,12 +50,9 @@ namespace avaloniachat.Models
                 Client.From<Students>().Insert(new Students() { Name = Username, Age = Age });
             }
         }
-        public void NewMessage(string Message)
+        public async Task SendMessageAsync(Messages message)
         {
-            if (Message != "")
-            {
-                Client.From<Messages>().Insert(new Messages() { UserId = StudentThis.Id, Text = Message });
-            }
+            await Client.From<Messages>().Insert(message); ;
         }
         public async Task<bool> IsUserExist(string Username)
         {
@@ -80,14 +78,40 @@ namespace avaloniachat.Models
         public async void SetStudents()
         {
             var DataStudents = await Client.From<Students>().Get();
-            ObservableCollection < Students> StudentsNew = new ObservableCollection<Students>(DataStudents.Models);
-            Students = StudentsNew;
+            var StudentsNew = new ObservableCollection<Students>(DataStudents.Models);
+
+            foreach (Students Student in StudentsNew)
+            {
+                bool Contains = false;
+                foreach (Students _Student in Students)
+                {
+                    if (_Student.Id == Student.Id) { Contains = true; break; }
+                }
+                if (!Contains)
+                {
+                    Students.Add(Student);
+                }
+            }
+
         }
         public async void SetMessages()
         {
             var DataMessages = await Client.From<Messages>().Get();
             ObservableCollection<Messages> MessagesNew = new ObservableCollection<Messages>(DataMessages.Models);
-            Messages = MessagesNew;
+
+            foreach (Messages Message in MessagesNew)
+            {
+                bool Contains = false;
+                foreach (Messages _Message in Messages)
+                {
+                    if (_Message.Id == Message.Id) { Contains = true; break; }
+                }
+                if (!Contains)
+                {
+                    Messages.Add(Message);
+                }
+            }
+
         }
     }
 }

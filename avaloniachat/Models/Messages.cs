@@ -10,6 +10,14 @@ namespace avaloniachat.Models
 {
     public class Messages : SupabaseModel
     {
+        public Messages()
+        {
+        }
+        public Messages(string _Text, int _UserId)
+        {
+            UserId = _UserId;
+            Text = _Text;
+        }
         [PrimaryKey("id", false)]
         public int Id { get; set; }
 

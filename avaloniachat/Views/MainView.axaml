@@ -2,10 +2,10 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:models="clr-namespace:avaloniachat.Models;assembly=avaloniachat"
 			 x:Class="avaloniachat.Views.MainView"
 			 Width="700" Height="700"
 			 Background="Transparent">
-
 	<DockPanel Margin="20">
 
 		<Grid ShowGridLines="True">
